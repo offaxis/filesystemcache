@@ -1,0 +1,19 @@
+{
+    "name": "offaxis/filesystemcache",
+    "description": "File System Cache to store model data",
+    "authors": [
+        {
+            "name": "Off/Axis",
+            "email": "clement@offaxis.io"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "FileSystemCache": "src/"
+        }
+    }
+}
