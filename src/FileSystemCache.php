@@ -74,7 +74,7 @@ class FileSystemCache {
     }
 
     public function setKey() {
-		$this->_key = md5($this->_entity.$this->_$id);
+		$this->_key = md5($this->_entity.$this->_id);
         return $this;
 	}
 
