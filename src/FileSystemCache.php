@@ -17,7 +17,7 @@ class FileSystemCache {
         $this->_entity = strtolower($entity);
         $this->_id = $id;
 
-        return $this->setKey()->setPath($path);
+        return $this->setKey()->setPath($path)->setContent();
     }
 
 
@@ -30,6 +30,13 @@ class FileSystemCache {
         }
         return $this->_data;
 	}
+
+    public function getTtl() {
+        if( $this->getContent() && !$this->_ttl ) {
+            $this->_ttl = $this->_content['ttl'];
+        }
+        return $this->_ttl;
+    }
 
 
 	public function store($data, $ttl) {
@@ -55,12 +62,15 @@ class FileSystemCache {
 	 * )
 	 */
      public function getContent() {
+         return $this->_content;
+     }
+
+     public function setContent() {
          if( $this->getPath() && !$this->_content ) {
              if( file_exists($this->getPath()) ) {
     			 $this->_content = unserialize(base64_decode(file_get_contents($this->getPath())));
     		 }
          }
-         return $this->_content;
      }
 
 
@@ -85,7 +95,7 @@ class FileSystemCache {
 	 * if ttl == 0, ttl has not been activated for this file
 	 */
 	public function isValid() {
-		return $this->_ttl === 0 || $this->_ttl > time();
+		return $this->getTtl() && ($this->getTtl() === 0 || $this->getTtl() > time());
 	}
 
 
@@ -99,9 +109,9 @@ class FileSystemCache {
 	public function setPath($basePath) {
 		$prePath = $basePath . $this->_entity . '/' . $this->_key[0] . '/' . $this->_key[1];
 		if( !is_dir($prePath) ) {
-				mkdir($prePath, 0777, true);
-			}
-			$this->_path = $prePath . '/' . $this->_key;
+			mkdir($prePath, 0777, true);
+		}
+		$this->_path = $prePath . '/' . $this->_key;
 		return $this;
 	}
 
