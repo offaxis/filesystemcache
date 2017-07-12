@@ -14,7 +14,7 @@ class FileSystemCache {
 
 
     public function __construct($path, $entity, $id) {
-        $this->_entity = $entity;
+        $this->_entity = strtolower($entity);
         $this->_id = $id;
 
         return $this->setKey()->setPath($path);
@@ -104,7 +104,7 @@ class FileSystemCache {
 			$this->_path = $prePath . '/' . $this->_key;
 		return $this;
 	}
-    
+
 }
 
 ?>
