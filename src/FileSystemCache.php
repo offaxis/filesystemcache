@@ -97,8 +97,12 @@ class FileSystemCache {
     }
 
 	public function setPath($basePath) {
-		$this->_path = $basePath . $this->_entity . '/' . $this->_key[0] . '/' . $this->_key[1] . '/' . $this->_key;
-        return $this;
+		$prePath = $basePath . $this->_entity . '/' . $this->_key[0] . '/' . $this->_key[1];
+		if( !is_dir($prePath) ) {
+				mkdir($prePath, 0777, true);
+			}
+			$this->_path = $prePath . '/' . $this->_key;
+		return $this;
 	}
 }
 
