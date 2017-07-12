@@ -104,6 +104,7 @@ class FileSystemCache {
 			$this->_path = $prePath . '/' . $this->_key;
 		return $this;
 	}
+    
 }
 
 ?>
